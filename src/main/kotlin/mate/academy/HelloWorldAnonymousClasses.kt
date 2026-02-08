@@ -1,5 +1,11 @@
 package mate.academy
 
+fun main() {
+    val helloWorld = HelloWorldAnonymousClasses()
+    println(helloWorld.sayHello(listOf()))
+    println(helloWorld.sayHello(listOf("Alice", "Bob")))
+}
+
 class HelloWorldAnonymousClasses {
 
     interface HelloWorldGreeting {
@@ -8,32 +14,32 @@ class HelloWorldAnonymousClasses {
     }
 
     fun sayHello(names: List<String>): List<String> {
-        val listClazzGreets = listOf<HelloWorldGreeting>(
-            EnglishGreeting(),
-            FrenchGreeting(),
-            SpanishGreeting()
-        )
-
-        val resultGreet = mutableListOf<String>()
-        for (g in listClazzGreets) {
-            resultGreet.add(g.greet())
+        val englishGreeting = object : HelloWorldGreeting {
+            override fun greet(): String = "Hello world"
+            override fun greetSomeone(someone: String): String = "Hello $someone"
         }
 
-        if (names.isEmpty()) {
-            return resultGreet
-        } else {
-            for (name in names) {
-                for (g in listClazzGreets) {
-                    resultGreet.add(g.greetSomeone(name))
-                }
-            }
+        val frenchGreeting = object : HelloWorldGreeting {
+            override fun greet(): String = "Salut tout le monde"
+            override fun greetSomeone(someone: String): String = "Salut $someone"
         }
-        return resultGreet
+
+        val spanishGreeting = object : HelloWorldGreeting {
+            override fun greet(): String = "Hola, mundo"
+            override fun greetSomeone(someone: String): String = "Hola, $someone"
+        }
+
+        val listOf = listOf(spanishGreeting, frenchGreeting, englishGreeting)
+        val result = mutableListOf<String>()
+        for (l in listOf) {
+            result.add(l.greet())
+        }
+
+        for (name in names) {
+            result.add(englishGreeting.greetSomeone(name))
+            result.add(frenchGreeting.greetSomeone(name))
+            result.add(spanishGreeting.greetSomeone(name))
+        }
+        return result
     }
-}
-
-fun main() {
-    val helloWorld = HelloWorldAnonymousClasses()
-    println(helloWorld.sayHello(listOf()))
-    println(helloWorld.sayHello(listOf("Alice", "Bob")))
 }
