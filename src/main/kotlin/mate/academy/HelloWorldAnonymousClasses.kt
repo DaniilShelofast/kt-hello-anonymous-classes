@@ -29,7 +29,7 @@ class HelloWorldAnonymousClasses {
             override fun greetSomeone(someone: String): String = "Hola, $someone"
         }
 
-        val listOf = listOf(spanishGreeting, frenchGreeting, englishGreeting)
+        val listOf = listOf(englishGreeting, frenchGreeting, spanishGreeting)
         val result = mutableListOf<String>()
         for (l in listOf) {
             result.add(l.greet())
